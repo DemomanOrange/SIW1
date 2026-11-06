@@ -1,27 +1,32 @@
 package model;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class PurchaseOrder implements Comparable<PurchaseOrder> {
     private Client client;
     private Vehicle vehicle;
-    private int priority;
+    private long orderTimestamp;
 
-    public PurchaseOrder(Client client, Vehicle vehicle, int priority) {
+    public PurchaseOrder(Client client, Vehicle vehicle) {
         this.client = client;
         this.vehicle = vehicle;
-        this.priority = priority;
+        this.orderTimestamp = System.currentTimeMillis();
     }
 
     public Client getClient() { return client; }
     public Vehicle getVehicle() { return vehicle; }
-    public int getPriority() { return priority; }
+    public long getOrderTimestamp() { return orderTimestamp; }
+
 
     @Override
     public int compareTo(PurchaseOrder other) {
-        return Integer.compare(other.priority, this.priority); 
+        return Long.compare(this.orderTimestamp, other.orderTimestamp);
     }
 
     @Override
     public String toString() {
-        return String.format("Order{Client=%s, VehicleVin=%s, Priority=%d}", client.getFullName(), vehicle.getVin(), priority);
+        return String.format("Заказ{Клиент='%s', VIN='%s %s' (%s), Время=%d}",
+                client.getFullName(), vehicle.getBrand(), vehicle.getModel(), vehicle.getVin(), orderTimestamp);
     }
 }

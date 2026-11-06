@@ -41,14 +41,14 @@ public class CarDealershipService {
         registeredClients.add(client);
     }
 
-    public void submitPurchaseOrder(Client client, String vin, int priority) {
+    public void submitPurchaseOrder(Client client, String vin) {
         Vehicle vehicle = findVehicleByVin(vin);
         if (vehicle != null) {
-            PurchaseOrder order = new PurchaseOrder(client, vehicle, priority);
+            PurchaseOrder order = new PurchaseOrder(client, vehicle);
             orderQueue.offer(order);
-            System.out.println("[Клиент] Успешно создана заявка: " + order);
+            System.out.println("[Успешно] Заявка создана: " + order);
         } else {
-            System.out.println("[Ошибка] Автомобиль с VIN " + vin + " не найден для заказа.");
+            System.out.println("Автомобиль с VIN " + vin + " не найден.");
         }
     }
 
